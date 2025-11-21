@@ -85,7 +85,7 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isLoadingBill }) => {
   const tableRows: Array<typeof DataTableRow> = useMemo(
     () =>
       filteredLineItems?.map((item, index) => {
-        const isBillPosted = bill?.status === 'POSTED';
+        const canEditBill = bill?.status === 'PENDING';
         return {
           no: `${index + 1}`,
           id: `${item.uuid}`,
@@ -97,7 +97,7 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isLoadingBill }) => {
           total: convertToCurrency(item.price * item.quantity, defaultCurrency),
           actionButton: (
             <span>
-              {!isBillPosted ? (
+              {canEditBill ? (
                 <Button
                   data-testid={`edit-button-${item.uuid}`}
                   renderIcon={Edit}
@@ -114,7 +114,7 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isLoadingBill }) => {
                   hasIconOnly
                   kind="ghost"
                   disabled
-                  iconDescription={t('cannotEditPostedBill', 'Can not edit line items of a posted Bill')}
+                  iconDescription={t('cannotEditThisBill', 'You can not edit this bill')}
                   tooltipPosition="left"
                 />
               )}
