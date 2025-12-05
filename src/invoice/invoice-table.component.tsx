@@ -97,7 +97,6 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isLoadingBill }) => {
           total: convertToCurrency(item.price * item.quantity, defaultCurrency),
           actionButton: (
             <span>
-              {canEditBill ? (
                 <Button
                   data-testid={`edit-button-${item.uuid}`}
                   renderIcon={Edit}
@@ -106,18 +105,8 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isLoadingBill }) => {
                   iconDescription={t('editThisBillItem', 'Edit this bill item')}
                   tooltipPosition="left"
                   onClick={() => handleSelectBillItem(item)}
+                  disabled = {bill?.status !== 'PENDING'}
                 />
-              ) : (
-                <Button
-                  data-tested={`edit-button-${item.uuid}`}
-                  renderIcon={Edit}
-                  hasIconOnly
-                  kind="ghost"
-                  disabled
-                  iconDescription={t('cannotEditThisBill', 'You can not edit this bill')}
-                  tooltipPosition="left"
-                />
-              )}
             </span>
           ),
         };

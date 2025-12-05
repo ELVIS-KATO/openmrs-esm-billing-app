@@ -21,11 +21,9 @@ import type {
 
 export const mapBillProperties = (bill: PatientInvoice): MappedBill => {
   const activeLineItems = bill?.lineItems?.filter((item) => !item.voided) || [];
-  const isSpecialStatus = bill.status === 'POSTED' || bill.status === 'PAID' || bill.status === 'ADJUSTED';
-
-  const status = isSpecialStatus
-    ? bill.status
-    : activeLineItems.length > 0
+  
+  const status = 
+     activeLineItems.length > 0
       ? activeLineItems.some((item) => item.paymentStatus === 'PENDING')
         ? 'PENDING'
         : 'PAID'
